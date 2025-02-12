@@ -1,3 +1,5 @@
+
+🐉
 Práctica 8 - "Cazadores de Dragones"
 Descripción
 Eres el encargado de diseñar un juego basado en un universo de cazadores que luchan contra dragones. Los jugadores podrán seleccionar un cazador y enfrentarse a diversos dragones en un combate por turnos, ganando recompensas en oro si los derrotan. Además, podrán añadir cazadores o dragones especiales para hacer el juego más dinámico y retador.
