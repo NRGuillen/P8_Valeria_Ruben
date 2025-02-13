@@ -2,7 +2,6 @@
 #include "utilidades.h"
 
 
-
 //INICIALIZAR CAZADOR  
     void inicializarCazador (Cazador * datos, int ID, const char *nombre, const char *arma, int ataque, int vida, int oro, const char *descripcion){
         datos -> ID = ID;
@@ -51,3 +50,5 @@
 
 free(cazadores);
 }
+
+void añadirCazador()

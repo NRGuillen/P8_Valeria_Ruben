@@ -13,10 +13,11 @@ luego en el main.c SOLO HAY UN  MAIN EN LOS OTROS .h y .C NO HAY MAIN
 #include <utilidades.h>
 
 
-COMPILAR:  gcc make.c cazador.c -o programa
+COMPILAR:  gcc main.c cazador.c -o programa
 */
-// make.c
+
 #include "cazador.h"
+#include "utilidades.h"
 
 int main() {
     int opcion;
@@ -31,6 +32,7 @@ int main() {
             visualizarCazador();  // Llamada a la función definida en cazador.c
             break;
         case 2:
+            
             break;
         case 3:
             printf("Saliendo...\n");
