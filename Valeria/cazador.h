@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "cazador.h"
-#include "utilidades.h"
 
 #define MAXNOMBRE 50
 #define MAXARMA 20
@@ -27,5 +25,5 @@ void inicializarCazador (Cazador * datos, int ID, const char *nombre, const char
 
 void cazadorSELECT ( const Cazador * cazador_a_imprimir);
 
-void visualizarCazador();
+void visualizarCazador(void);
 
