@@ -8,16 +8,6 @@
 #define CIAN      "\033[36m"
 #define BLANCO    "\033[37m"
 
-// Colores brillantes ANSI
-#define NEGRO_B   "\033[90m"
-#define ROJO_B    "\033[91m"
-#define VERDE_B   "\033[92m"
-#define AMARILLO_B "\033[93m"
-#define AZUL_B    "\033[94m"
-#define MAGENTA_B "\033[95m"
-#define CIAN_B    "\033[96m"
-#define BLANCO_B  "\033[97m"
-
 // Colores personalizados RGB
 #define NARANJA   "\033[38;2;255;128;0m"
 #define ROSA      "\033[38;2;255;151;203m"
@@ -36,3 +26,6 @@
 
 // Reset (para volver al color original)
 #define SC        "\033[0m"
+
+//AÑADIDO VALERIA
+

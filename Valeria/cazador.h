@@ -2,13 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 #define MAXNOMBRE 50
 #define MAXARMA 20
 #define MAXATAQUE 20
 #define MAXVIDA 200
 #define MAXORO 200
 #define MAXDESCRPCION 200
+#define MAXCAZADOR 3
 
 //STRUCT DATOS CAZADOR;   
     typedef struct{
