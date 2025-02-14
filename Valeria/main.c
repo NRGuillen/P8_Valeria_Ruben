@@ -20,19 +20,23 @@ COMPILAR:  gcc main.c cazador.c -o programa
 #include "utilidades.h"
 
 int main() {
+    int totalCazadores = 3;
     int opcion;
+    Cazador *cazadores = NULL;
+    inicializarCazadores(&cazadores, &totalCazadores);
+
     printf("1) Seleccionar un cazador.\n"
            "2) Añadir cazador.\n"
-           "3) Salir."
+           "3) Salir.\n"
            "Seleccion: ");
     scanf("%d", &opcion);
 
     switch(opcion) {
         case 1:
-            visualizarCazador();  // Llamada a la función definida en cazador.c
+            visualizarCazador(cazadores, totalCazadores);  // Llamada a la función definida en cazador.c
             break;
         case 2:
-            
+            añadirCazador(&cazadores, &totalCazadores);
             break;
         case 3:
             printf("Saliendo...\n");
@@ -42,6 +46,7 @@ int main() {
             break;
     }
 
-    return 0;
+free (cazadores);
+return 0;
 }
 

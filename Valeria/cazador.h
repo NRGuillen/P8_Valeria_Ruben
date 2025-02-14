@@ -23,7 +23,11 @@
 
 void inicializarCazador (Cazador * datos, int ID, const char *nombre, const char *arma, int ataque, int vida, int oro, const char *descripcion);
 
-void cazadorSELECT ( const Cazador * cazador_a_imprimir);
+void cazadorSELECT (const Cazador * cazador_a_imprimir);
 
-void visualizarCazador(void);
+ void inicializarCazadores(Cazador ** cazadores, int *totalCazadores);
+
+void visualizarCazador(Cazador *cazadores, int totalCazadores);
+
+void añadirCazador(Cazador **cazadores, int *totalCazadores);
 
