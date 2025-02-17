@@ -1,10 +1,12 @@
 #include "utilidades.h"
 #include "dragones.h"
 
-void añadir_dragon(char *nombre, int vida, int daño, int resistencia, char *pasiva, char *descripcion, int oro) {
+void añadir_dragon(Dragon **dragones, char *nombre, int vida, int daño, int resistencia, char *pasiva, char *descripcion, int oro) {
+
+    Dragon nuevoDragon;
 
     printf("Introduce el nombre de tu dragon:");
-    scanf("%s", nombre);
+    fgets(nombre, 50, stdin);
 
     printf("Introduce la vida de tu dragon:");
     scanf("%d", &vida);
@@ -38,8 +40,14 @@ void añadir_dragon(char *nombre, int vida, int daño, int resistencia, char *pa
     printf("Introduce la recompensa de oro de tu dragon: ");
     scanf("%d", &oro);
 
+    *dragones = (Dragon *)realloc(*dragones, (*MAX_DRAGONES + 1) * sizeof(Dragon));
+        if (*dragones == NULL) { 
 
+            printf("Error: NULL\n"); 
+        }
 
+    memcpy(&((*dragones)[*MAX_DRAGONES]), &nuevoDragon, sizeof(Dragon));
+    (MAX_DRAGONES)++;
 
 }
 
@@ -91,6 +99,8 @@ void visualizarDragones() {
     free(dragones);
 
 }
+
+
 
 
 

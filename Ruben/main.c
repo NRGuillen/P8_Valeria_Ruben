@@ -19,7 +19,7 @@ int main() {
             break;
 
         case 2:
-            //añadir_dragon(nombre, vida, daño, resistencia, pasiva, descripcion, oro);
+            añadir_dragon(nombre, vida, daño, resistencia, pasiva, descripcion, oro);
             break;
 
         case 3:
