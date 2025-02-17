@@ -13,7 +13,7 @@ luego en el main.c SOLO HAY UN  MAIN EN LOS OTROS .h y .C NO HAY MAIN
 #include <utilidades.h>
 
 
-COMPILAR:  gcc main.c cazador.c -o programa
+COMPILAR:  gcc *.c -o programa
 */
 
 #include "cazador.h"
@@ -21,19 +21,24 @@ COMPILAR:  gcc main.c cazador.c -o programa
 
 int main() {
     int totalCazadores = 3;
+    int intentos = 3; 
     int opcion;
+
     Cazador *cazadores = NULL;
     inicializarCazadores(&cazadores, &totalCazadores);
 
-    printf("1) Seleccionar un cazador.\n"
-           "2) Añadir cazador.\n"
-           "3) Salir.\n"
-           "Seleccion: ");
+    BIENVENIDA();
+
+    printf(MAGENTA"\t MENÚ: \n"
+           AZUL_C"\t 1) Seleccionar un cazador.\n"
+           "\t 2) Añadir cazador.\n"
+           "\t 3) Salir.\n"SC
+           MAGENTA"\t OPCIÓN: "SC);
     scanf("%d", &opcion);
 
     switch(opcion) {
         case 1:
-            visualizarCazador(cazadores, totalCazadores);  // Llamada a la función definida en cazador.c
+            cazadorSELEC(cazadores, totalCazadores);  // Llamada a la función definida en cazador.c
             break;
         case 2:
             añadirCazador(&cazadores, &totalCazadores);

@@ -13,13 +13,15 @@
     }
 
 //VISUALIZAR CAZADOR
-    void cazadorSELECT ( const Cazador * cazador_a_imprimir){
-        printf(ROJO"\t Nombre:" SC " %s.\n"
+    void cazadorIMPRIMIR ( const Cazador * cazador_a_imprimir){
+        printf(ROJO"\t ID:" SC " %d.\n"
+               ROJO"\t Nombre:" SC " %s.\n"
                ROJO"\t Arma:" SC " %s.\n"
                ROJO"\t Daño:" SC " %d.\n"
                ROJO"\t Vida:" SC " %d.\n"
                ROJO"\t Oro:" SC " %d monedas.\n"
                ROJO"\t Descripción:" SC " %s\n",
+               cazador_a_imprimir->ID,
                cazador_a_imprimir->nombre,
                cazador_a_imprimir->arma,
                cazador_a_imprimir->ataque,
@@ -27,7 +29,8 @@
                cazador_a_imprimir->oro,
                cazador_a_imprimir->descripcion);
     }
-//IMPRIMIR CAZADORES:
+
+//DATOS CAZADORES INICIALES:
     void inicializarCazadores(Cazador ** cazadores, int *totalCazadores){
     
     *cazadores = (Cazador*) malloc (*totalCazadores * sizeof(Cazador));
@@ -38,64 +41,197 @@
     inicializarCazador(&(*cazadores)[0], 1, "Mushashi", "Iaido", 20, 120, 100, "Un caballero audaz y letal, cuya fuerza arrolladora destruye cualquier defensa. Ataca con velocidad y precisión, sin dar tregua a sus enemigos.");
     inicializarCazador(&(*cazadores)[1], 2, "Conan", "Atlantean", 15, 150, 100, "Un caballero imponente y resistente, cuya armadura absorbe cualquier golpe. Avanza sin miedo, protegiendo a sus aliados con su inquebrantable defensa.");
     inicializarCazador(&(*cazadores)[2], 3, "Sauron", "Narsil", 10, 90, 100, "Un sabio y compasivo curandero, cuyo poder restaura heridas y protege a sus aliados. Su magia divina es un faro de esperanza en la batalla.");
-}
+ }
 
+//IMRPIMIR EN EL MAIN LOS CAZADORES Y ELEGIR EL CAZADOR
+    void cazadorSELEC(Cazador *cazadores, int totalCazadores){
 
-    void visualizarCazador(Cazador *cazadores, int totalCazadores){
-        printf(NARANJA"CAZADORES DISPONIBLES: \n" SC);
+        printf(NARANJA"\nCAZADORES DISPONIBLES: \n" SC);
 
         system("chafa -f symbols -s 50x30 Mushashi.jpg"); //PARA USAR CHAFA, EL USUARIO HA DE DESCARGARSE "sudo apt install chafa"
-        cazadorSELECT(&cazadores[0]);
+        cazadorIMPRIMIR(&cazadores[0]);
         system("chafa -f symbols -s 50x30 Conan.jpg");
-        cazadorSELECT(&cazadores[1]);
+        cazadorIMPRIMIR(&cazadores[1]);
         system("chafa -f symbols -s 50x30 Sauron.jpg");
-        cazadorSELECT(&cazadores[2]);
+        cazadorIMPRIMIR(&cazadores[2]);
+
+    int cazadorACTIVO;
+        do {
+            printf(NARANJA"\n\nIntroduzca el ID del cazador con el que va a jugar: "SC);
+    
+            if (scanf("%d", &cazadorACTIVO) != 1) {
+                printf(ROJO"Entrada inválida. Debe ingresar un  número.\n"SC);
+                while (getchar() != '\n');
+                intentos--;
+            } 
+    
+            else if (cazadorACTIVO < 1 || cazadorACTIVO  > totalCazadores){
+                printf(ROJO"El ID del primer cazador es 1 y el último es %d.\n" SC, totalCazadores);
+                intentos--;
+            } 
+
+            else {intentos = 3;
+                  cazadorIMPRIMIR(&cazadores[cazadorACTIVO-1]);
+                  break;}
+    
+            if (intentos == 0){
+                    printf(ROJO"INTENTOS AGOTADOS. MÁS SUERTE LA PRÓXIMA VEZ.\n"SC);
+                    exit(EXIT_FAILURE);}
+    
+            } while (intentos > 0);
 
     }
 
+//AÑADIR CAZADORES
     void añadirCazador(Cazador **cazadores, int *totalCazadores){
-    
     Cazador nuevoCazador;
 
-    printf("Rellene los datos del nuevo cazador:\n");
+    printf(VERDE_C"Rellene los datos del nuevo cazador:\n"SC);
 
-    printf("ID: %d.\n", *totalCazadores + 1);
+    printf(AZUL_C"\t ID:" SC" %d.\n", *totalCazadores + 1);
 
-    printf("NOMBRE: ");
-    scanf(" %[^\n]", nuevoCazador.nombre);
+    //NOMBRE
+        do{
+            printf(AZUL_C"\t NOMBRE: "SC);
+            scanf(" %[^\n]", nuevoCazador.nombre);
 
-    printf("ARMA: ");
-    scanf(" %[^\n]", nuevoCazador.arma);
+            if (strlen(nuevoCazador.nombre) < 1 || strlen(nuevoCazador.nombre)  > MAXNOMBRE){
+                printf(ROJO"Valor inválido, el nombre no puede ser menor a 1 o mayor a %d.\n" SC, MAXNOMBRE);
+                intentos--;
+            } 
 
-    printf("DAÑO: ");
-    scanf("%d", &nuevoCazador.ataque);
-
-    printf("VIDA: ");
-    scanf("%d", &nuevoCazador.vida);
-
-    printf("ORO: ");
-    scanf("%d", &nuevoCazador.oro);
-
-    printf("DESCRIPCIÓN: ");
-    scanf(" %[^\n]", nuevoCazador.descripcion);
-
-    // Realoca espacio para un cazador más
-    *cazadores = (Cazador*) realloc(*cazadores, (*totalCazadores + 1) * sizeof(Cazador));
+            else {intentos = 3;
+                  break;}
     
-    // Verifica si la realocación fue exitosa
+            if (intentos == 0){
+                    printf(ROJO"INTENTOS AGOTADOS. MÁS SUERTE LA PRÓXIMA VEZ.\n"SC);
+                    exit(EXIT_FAILURE);}
+         }while (intentos > 0);
+
+    //ARMA
+        do{
+            printf(AZUL_C"\t ARMA: "SC);
+            scanf(" %[^\n]", nuevoCazador.arma);
+
+            if (strlen(nuevoCazador.arma) < 1 || strlen(nuevoCazador.arma)  > MAXARMA){
+                printf(ROJO"Valor inválido, el nombre del arma no puede ser menor a 1 o mayor a %d.\n" SC, MAXARMA);
+                intentos--;
+            } 
+
+            else {intentos = 3;
+                  break;}
+    
+            if (intentos == 0){
+                    printf(ROJO"INTENTOS AGOTADOS. MÁS SUERTE LA PRÓXIMA VEZ.\n"SC);
+                    exit(EXIT_FAILURE);}
+         }while (intentos > 0);
+
+    //ATAQUE
+        do {
+            printf(AZUL_C"\t DAÑO: "SC);
+    
+            if (scanf("%d", &nuevoCazador.ataque) != 1) {// Comprobamos que se ingresa un número, después de     ingresar la letra, se limpia el buffer y se resta un    intento.
+                printf(ROJO"Entrada inválida. Debe ingresar un  número.\n"SC);
+                while (getchar() != '\n');
+                intentos--;
+            } 
+    
+            else if (nuevoCazador.ataque < 1 || nuevoCazador.ataque  > MAXATAQUE){//Si el ataque es mayor a 20 o menor   a 1, también salta error y se resta un intento.
+                printf(ROJO"Valor inválido, el ataque no puede ser  menor a 1 o mayor a %d.\n" SC, MAXATAQUE);
+                intentos--;
+            } 
+
+            else {intentos = 3;
+                  break;} // Salimos del bucle si el valor es válido
+    
+            if (intentos == 0){//Si los intentos llegan a cero, se sale del programa y se reinician los intentos
+                    printf(ROJO"INTENTOS AGOTADOS. MÁS SUERTE LA    PRÓXIMA VEZ.\n"SC);
+                    exit(EXIT_FAILURE);}
+    
+            } while (intentos > 0);
+
+    //VIDA    
+        do {
+            printf(AZUL_C"\t VIDA: "SC);
+    
+            if (scanf("%d", &nuevoCazador.vida) != 1){
+                printf(ROJO"Entrada inválida. Debe ingresar un  número.\n"SC);
+                while (getchar() != '\n');
+                intentos--;
+            } 
+    
+            else if (nuevoCazador.vida < 1 || nuevoCazador.vida  > MAXVIDA){
+                printf(ROJO"Valor inválido, la vida no puede ser menor a 1 o mayor a %d.\n" SC, MAXVIDA);
+                intentos--;
+            } 
+
+            else {intentos = 3;
+                  break;}
+    
+            if (intentos == 0){
+                    printf(ROJO"INTENTOS AGOTADOS. MÁS SUERTE LA PRÓXIMA VEZ.\n"SC);
+                    exit(EXIT_FAILURE);}
+    
+            }while (intentos > 0);
+
+    //ORO
+        do {
+            printf(AZUL_C"\t ORO: "SC);
+    
+            if (scanf("%d", &nuevoCazador.oro) != 1){
+                printf(ROJO"Entrada inválida. Debe ingresar un  número.\n"SC);
+                while (getchar() != '\n');
+                intentos--;
+            } 
+    
+            else if (nuevoCazador.oro < 1 || nuevoCazador.oro  > MAXORO){
+                printf(ROJO"Valor inválido, el oro no puede ser menor a 1 o mayor a %d.\n" SC, MAXORO);
+                intentos--;
+            } 
+
+            else {intentos = 3;
+                  break;}
+    
+            if (intentos == 0){
+                    printf(ROJO"INTENTOS AGOTADOS. MÁS SUERTE LA PRÓXIMA VEZ.\n"SC);
+                    exit(EXIT_FAILURE);}
+    
+            }while (intentos > 0);
+
+    //DESCRIPCIÓN
+        do{
+            printf(AZUL_C"\t DESCRIPCIÓN: "SC);
+            scanf(" %[^\n]", nuevoCazador.descripcion);
+
+            if (strlen(nuevoCazador.descripcion) < 1 || strlen(nuevoCazador.descripcion)  > MAXDESCRPCION){
+                printf(ROJO"Valor inválido, la descripción no puede ser menor a 1 o mayor a %d.\n" SC, MAXDESCRPCION);
+                intentos--;
+            } 
+
+            else {intentos = 3;
+                  break;}
+    
+            if (intentos == 0){
+                    printf(ROJO"INTENTOS AGOTADOS. MÁS SUERTE LA PRÓXIMA VEZ.\n"SC);
+                    exit(EXIT_FAILURE);}
+         }while (intentos > 0);
+
+
+    *cazadores = (Cazador*) realloc(*cazadores, (*totalCazadores + 1) * sizeof(Cazador));
     if (*cazadores == NULL) {
         printf("ERROR CATASTRÓFICO. No se pudo asignar memoria.\n");
         exit(EXIT_FAILURE);
     }
 
-    // Añade el nuevo cazador
+    //Accedemos a la posición 4 con este índice (*cazadores)[*totalCazadores] que nos lleva a nuestro array de cazadores en la posición [4]
     (*cazadores)[*totalCazadores] = nuevoCazador;
 
-    // Incrementa el número de cazadores
+    //Incrementamos el número de cazadores
     (*totalCazadores)++;
 
-    printf("CAZADOR AGREGADO:\n");
+    printf(NARANJA"CAZADOR AGREGADO:\n"SC);
 
     // Función para seleccionar el cazador recién añadido
-    cazadorSELECT(&(*cazadores)[*totalCazadores - 1]);
-}
+    cazadorIMPRIMIR(&(*cazadores)[*totalCazadores - 1]);
+ }
+

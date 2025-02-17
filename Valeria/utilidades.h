@@ -29,3 +29,11 @@
 
 //AÑADIDO VALERIA
 
+#include <stdio.h>
+#include <stdlib.h>
+
+void BIENVENIDA();
+
+//Cursiva:
+#define CURSIVA "\033[3m"
+
