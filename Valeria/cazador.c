@@ -1,6 +1,9 @@
 #include "cazador.h"
 #include "utilidades.h"
 
+
+extern int totalCazadores;
+
 //INICIALIZAR CAZADOR  
     void inicializarCazador (Cazador * datos, int ID, const char *nombre, const char *arma, int ataque, int vida, int oro, const char *descripcion){
         datos -> ID = ID;
@@ -45,6 +48,7 @@
 
 //IMRPIMIR EN EL MAIN LOS CAZADORES Y ELEGIR EL CAZADOR
     void cazadorSELEC(Cazador *cazadores, int totalCazadores){
+        int intentos = 3;
 
         printf(NARANJA"\nCAZADORES DISPONIBLES: \n" SC);
 
@@ -60,7 +64,7 @@
             printf(NARANJA"\n\nIntroduzca el ID del cazador con el que va a jugar: "SC);
     
             if (scanf("%d", &cazadorACTIVO) != 1) {
-                printf(ROJO"Entrada inválida. Debe ingresar un  número.\n"SC);
+                printf(ROJO"Entrada inválida. Debe ingresar un  número.\n"SC);  
                 while (getchar() != '\n');
                 intentos--;
             } 
@@ -70,7 +74,7 @@
                 intentos--;
             } 
 
-            else {intentos = 3;
+            else {
                   cazadorIMPRIMIR(&cazadores[cazadorACTIVO-1]);
                   break;}
     
@@ -84,6 +88,7 @@
 
 //AÑADIR CAZADORES
     void añadirCazador(Cazador **cazadores, int *totalCazadores){
+    int intentos = 3; 
     Cazador nuevoCazador;
 
     printf(VERDE_C"Rellene los datos del nuevo cazador:\n"SC);

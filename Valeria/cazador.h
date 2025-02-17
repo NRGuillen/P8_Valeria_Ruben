@@ -10,6 +10,9 @@
 #define MAXDESCRPCION 200
 #define MAXCAZADOR 3
 
+
+
+
 //STRUCT DATOS CAZADOR;   
     typedef struct{
         int ID;
