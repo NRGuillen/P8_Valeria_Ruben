@@ -25,7 +25,7 @@ void inicializarCazador (Cazador * datos, int ID, const char *nombre, const char
 
 void cazadorIMPRIMIR (const Cazador * cazador_a_imprimir);
 
- void inicializarCazadores(Cazador ** cazadores, int *totalCazadores);
+void inicializarCazadores(Cazador ** cazadores, int *totalCazadores);
 
 void cazadorSELEC(Cazador *cazadores, int totalCazadores);
 
