@@ -1,54 +1,90 @@
-#include "utilidades.h"
-#include "dragones.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-void añadir_dragon(Dragon **dragones, char *nombre, int vida, int daño, int resistencia, char *pasiva, char *descripcion, int oro) {
+#define MAX_NOMBRE 50
+#define MAX_DESCRIPCION 1000
+#define MAX_DRAGONES 3
 
+typedef struct {
+    int id;
+    char nombre[MAX_NOMBRE];
+    int vida;
+    int daño;
+    int resistencia;
+    char pasiva[MAX_DESCRIPCION];
+    char descripcion[MAX_DESCRIPCION];
+    int oro;
+} Dragon;
+
+void inicializarDragon(Dragon *dragon, int id,  char *nombre, int vida, int daño, int resistencia,  char *pasiva,  char *descripcion, int oro);
+void mostrarDragon(Dragon *dragon);
+void visualizarDragones(void);
+void añadir_dragon(Dragon **dragones, int *totalDragones);
+
+void añadir_dragon(Dragon **dragones, int *totalDragones) {
     Dragon nuevoDragon;
-
-    printf("Introduce el nombre de tu dragon:");
-    fgets(nombre, 50, stdin);
-
-    printf("Introduce la vida de tu dragon:");
-    scanf("%d", &vida);
-
-    printf("Introduce el daño de tu dragon:");
-    scanf("%d", &daño);
-
-    printf("Introduce la resistencia de tu dragon:");
-    scanf("%d", &resistencia);
-
     int seleccion;
 
-    printf("Selecciona una pasiva para tu dragon:\n");
-    printf("\t1) PASIVA: +25%% resistencia a ataques\n");
-    printf("\t2) PASVIA: +25%% daño\n");
-    printf("\t3) PASIVA: Se curara un 5%% de su vida despues de cada ataque\n");
-    printf("Seleccion:");
-    scanf("%d", &seleccion);
+    getchar(); 
 
-    if(seleccion == 1){
-        printf("PASIVA: +25%% resistencia a ataques\n");
-    }else if(seleccion == 2){
-        printf("PASVIA: +25%% daño\n");
-    }else{
-        printf("PASVIA: Se curara un 5%% de su vida despues de cada ataque\n");
+    printf("Introduce el nombre de tu dragón: ");
+    fgets(nuevoDragon.nombre, sizeof(nuevoDragon.nombre), stdin);
+    nuevoDragon.nombre[strcspn(nuevoDragon.nombre, "\n")] = 0; 
+
+    printf("Introduce la vida de tu dragón: ");
+    scanf("%d", &nuevoDragon.vida);
+
+    printf("Introduce el daño de tu dragón: ");
+    scanf("%d", &nuevoDragon.daño);
+
+    printf("Introduce la resistencia de tu dragón: ");
+    scanf("%d", &nuevoDragon.resistencia);
+
+    printf("Selecciona una pasiva para tu dragón:\n");
+    printf("\t1) +25%% resistencia a ataques\n");
+    printf("\t2) +25%% daño\n");
+    printf("\t3) Se curará un 5%% de su vida después de cada ataque\n");
+    printf("\t4) Sin pasiva\n");
+    printf("Selección: ");
+    scanf("%d", &seleccion);
+    getchar(); 
+
+    switch (seleccion) {
+        case 1:
+            strcpy(nuevoDragon.pasiva, "+25% resistencia a ataques");
+            break;
+        case 2:
+            strcpy(nuevoDragon.pasiva, "+25% daño");
+            break;
+        case 3:
+            strcpy(nuevoDragon.pasiva, "Se curará un 5% de su vida después de cada ataque");
+            break;
+        default:
+            strcpy(nuevoDragon.pasiva, "Sin pasiva");
+            break;
     }
 
-    printf("Introduce una descripcion para tu dragon:");
-    fgets(descripcion, 1000, stdin);
+    printf("Introduce una descripción para tu dragón: ");
+    fgets(nuevoDragon.descripcion, sizeof(nuevoDragon.descripcion), stdin);
+    nuevoDragon.descripcion[strcspn(nuevoDragon.descripcion, "\n")] = 0;
 
-    printf("Introduce la recompensa de oro de tu dragon: ");
-    scanf("%d", &oro);
+    printf("Introduce la recompensa de oro de tu dragón: ");
+    scanf("%d", &nuevoDragon.oro);
 
-    *dragones = (Dragon *)realloc(*dragones, (*MAX_DRAGONES + 1) * sizeof(Dragon));
-        if (*dragones == NULL) { 
+    nuevoDragon.id = (*totalDragones) + 1;
 
-            printf("Error: NULL\n"); 
-        }
+    *dragones = (Dragon *)realloc(*dragones, (*totalDragones + 1) * sizeof(Dragon));
+    if (*dragones == NULL) {
+        printf("Error al asignar memoria\n");
+        return;
+    }
 
-    memcpy(&((*dragones)[*MAX_DRAGONES]), &nuevoDragon, sizeof(Dragon));
-    (MAX_DRAGONES)++;
+    memcpy(&((*dragones)[*totalDragones]), &nuevoDragon, sizeof(Dragon));
 
+    (*totalDragones)++; 
+    printf("\nDragón personalizado:\n");
+    mostrarDragon(&nuevoDragon);
 }
 
 void inicializarDragon(Dragon *dragon, int id,  char *nombre, int vida, int daño, int resistencia,  char *pasiva,  char *descripcion, int oro) {
@@ -62,17 +98,15 @@ void inicializarDragon(Dragon *dragon, int id,  char *nombre, int vida, int dañ
     dragon->oro = oro;
 }
 
-#define COLOR_ROJO "\033[40C"
-
 void mostrarDragon(Dragon *dragon) {
-    printf("\033[30A\033[60C\033[31mDragon %d\033[0m\n", dragon->id);
-    printf("\033[50C\033[31m Nombre:\033[0m %s\n", dragon->nombre);
-    printf("\033[50C\033[31m Vida:\033[0m %d\n", dragon->vida);
-    printf("\033[50C\033[31m Daño:\033[0m %d\n", dragon->daño);
-    printf("\033[50C\033[31m Resistencia:\033[0m %d%%\n", dragon->resistencia);
-    printf("\033[50C\033[31m Pasiva:\033[0m %s\n", dragon->pasiva);
-    printf("\033[50C\033[31m Descripción:\033[0m %s\n", dragon->descripcion);
-    printf("\033[50C\033[31m Recompensa:\033[0m %d de oro\033[30B\n\n", dragon->oro);
+    printf("\033[36mDragon %d\033[0m\n", dragon->id);
+    printf("\033[31mNombre:\033[0m %s\n", dragon->nombre);
+    printf("\033[31mVida:\033[0m %d\n", dragon->vida);
+    printf("\033[31mDaño:\033[0m %d\n", dragon->daño);
+    printf("\033[31mResistencia:\033[0m %d%%\n", dragon->resistencia);
+    printf("\033[31mPasiva:\033[0m %s\n", dragon->pasiva);
+    printf("\033[31mDescripción:\033[0m %s\n", dragon->descripcion);
+    printf("\033[31mRecompensa:\033[0m %d de oro\033[30B\n\n", dragon->oro);
 }
 
 
@@ -99,6 +133,59 @@ void visualizarDragones() {
     free(dragones);
 
 }
+
+/*void seleccionarDragon(){
+
+    int seleccion;
+    printf("Introduce que dragon quieres seleccionar: ");
+    if(seleccion == 1){
+    mostrarDragon(Dragon *dragon)
+    }else if(seleccion ==2){
+    mostrarDragon(Dragon *dragon); 
+    }else if(seleccion ==3){
+    mostrarDragon(Dragon *dragon);
+    }else{
+        printf("Has introducido un dragon que no existe\n");
+    }
+
+
+}
+*/
+int main() {
+    int opcion;
+    Dragon *dragones = NULL; 
+    int totalDragones = 0;  
+
+    printf("1) Seleccionar un dragón predefinido\n");
+    printf("2) Crear un nuevo dragón\n");
+    printf("3) Salir\n");
+    printf("Seleccion: ");
+    scanf("%d", &opcion);
+
+    switch(opcion) {
+        case 1:
+            visualizarDragones();
+
+            break;
+
+        case 2:
+            añadir_dragon(&dragones, &totalDragones);
+            //seleccionarDragon();
+            break;
+
+        case 3:
+            printf("Saliendo...\n");
+            break;
+
+        default:
+            printf("Opción inválida.\n");
+            break;
+    }
+
+    free(dragones);
+    return 0;
+}
+
 
 
 
