@@ -22,9 +22,11 @@ COMPILAR:  gcc *.c -o programa
 int totalCazadores = 3;
 
 int main() {
+    system("clear");
+
     BIENVENIDA();
 
-    Cazador *cazadores = NULL;
+    Cazador *cazadores = NULL;//Tenemos que inicializar el puntero donde vamos a guradar a los cazadores en el main, como todavía no tiene 'nada', lo inicializamos en nulo.
     inicializarCazadores(&cazadores, &totalCazadores);
     
     int opcion;

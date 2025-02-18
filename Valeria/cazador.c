@@ -75,6 +75,12 @@ extern int totalCazadores;
             } 
 
             else {
+                if(cazadorACTIVO == 1){
+                    system("chafa -f symbols -s 50x30 Mushashi.jpg");}
+                else if(cazadorACTIVO == 2){
+                    system("chafa -f symbols -s 50x30 Conan.jpg");}
+                else if(cazadorACTIVO == 3){
+                    system("chafa -f symbols -s 50x30 Sauron.jpg");}
                   cazadorIMPRIMIR(&cazadores[cazadorACTIVO-1]);
                   break;}
     
@@ -93,12 +99,21 @@ extern int totalCazadores;
 
     printf(VERDE_C"Rellene los datos del nuevo cazador:\n"SC);
 
+    nuevoCazador.ID = *totalCazadores + 1;
     printf(AZUL_C"\t ID:" SC" %d.\n", *totalCazadores + 1);
 
     //NOMBRE
         do{
             printf(AZUL_C"\t NOMBRE: "SC);
             scanf(" %[^\n]", nuevoCazador.nombre);
+
+            int esValido = 1;
+            for (int i = 0; i < strlen(nuevoCazador.nombre); i++) {
+                if (isdigit(nuevoCazador.nombre[i])) {
+                    esValido = 0;
+                    break;
+                }
+            }
 
             if (strlen(nuevoCazador.nombre) < 1 || strlen(nuevoCazador.nombre)  > MAXNOMBRE){
                 printf(ROJO"Valor inválido, el nombre no puede ser menor a 1 o mayor a %d.\n" SC, MAXNOMBRE);
@@ -137,7 +152,7 @@ extern int totalCazadores;
     
             if (scanf("%d", &nuevoCazador.ataque) != 1) {// Comprobamos que se ingresa un número, después de     ingresar la letra, se limpia el buffer y se resta un    intento.
                 printf(ROJO"Entrada inválida. Debe ingresar un  número.\n"SC);
-                while (getchar() != '\n');
+                while (getchar() != '\n');//PROPOSITO: limpiar el búfer de entrada, descartando cualquier carácter sobrante hasta que se llegue al final de la línea.
                 intentos--;
             } 
     
@@ -222,11 +237,12 @@ extern int totalCazadores;
          }while (intentos > 0);
 
 
-    *cazadores = (Cazador*) realloc(*cazadores, (*totalCazadores + 1) * sizeof(Cazador));
-    if (*cazadores == NULL) {
+    Cazador *REALLOC_TEMP = (Cazador*) realloc(*cazadores, (*totalCazadores + 1) * sizeof(Cazador));
+    if (REALLOC_TEMP == NULL) {
         printf("ERROR CATASTRÓFICO. No se pudo asignar memoria.\n");
         exit(EXIT_FAILURE);
     }
+    *cazadores = REALLOC_TEMP;
 
     //Accedemos a la posición 4 con este índice (*cazadores)[*totalCazadores] que nos lleva a nuestro array de cazadores en la posición [4]
     (*cazadores)[*totalCazadores] = nuevoCazador;
