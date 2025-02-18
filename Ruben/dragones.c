@@ -21,6 +21,8 @@ void inicializarDragon(Dragon *dragon, int id,  char *nombre, int vida, int dañ
 void mostrarDragon(Dragon *dragon);
 void visualizarDragones(void);
 void añadir_dragon(Dragon **dragones, int *totalDragones);
+void seleccionarDragon(Dragon *dragones, int totalDragones);
+
 
 void añadir_dragon(Dragon **dragones, int *totalDragones) {
     Dragon nuevoDragon;
@@ -67,7 +69,6 @@ void añadir_dragon(Dragon **dragones, int *totalDragones) {
 
     printf("Introduce una descripción para tu dragón: ");
     fgets(nuevoDragon.descripcion, sizeof(nuevoDragon.descripcion), stdin);
-    nuevoDragon.descripcion[strcspn(nuevoDragon.descripcion, "\n")] = 0;
 
     printf("Introduce la recompensa de oro de tu dragón: ");
     scanf("%d", &nuevoDragon.oro);
@@ -109,10 +110,8 @@ void mostrarDragon(Dragon *dragon) {
     printf("\033[31mRecompensa:\033[0m %d de oro\033[30B\n\n", dragon->oro);
 }
 
-
 void visualizarDragones() {
-    
-    Dragon *dragones = (Dragon*) malloc(3*sizeof(Dragon));
+    Dragon *dragones = (Dragon*) malloc(3 * sizeof(Dragon));
     if(dragones == NULL){
         printf("Error al reservar memoria\n");
         exit(EXIT_SUCCESS);
@@ -130,27 +129,32 @@ void visualizarDragones() {
     system("chafa -f symbols -s 50x30 Velkhanos.jpg");
     mostrarDragon(&dragones[2]);
 
+    seleccionarDragon(dragones, 3);
+
     free(dragones);
-
 }
 
-/*void seleccionarDragon(){
-
+void seleccionarDragon(Dragon *dragones, int totalDragones) {
     int seleccion;
-    printf("Introduce que dragon quieres seleccionar: ");
-    if(seleccion == 1){
-    mostrarDragon(Dragon *dragon)
-    }else if(seleccion ==2){
-    mostrarDragon(Dragon *dragon); 
-    }else if(seleccion ==3){
-    mostrarDragon(Dragon *dragon);
-    }else{
-        printf("Has introducido un dragon que no existe\n");
+    printf("Introduce el número del dragón que quieres seleccionar (1-3): ");
+    scanf("%d", &seleccion);
+
+    if (seleccion >= 1 && seleccion <= totalDragones) {
+        if (seleccion == 1) {
+            system("chafa -f symbols -s 50x30 Nightmare.jpg");  
+        } else if (seleccion == 2) {
+            system("chafa -f symbols -s 50x30 Cryonyx.jpg");  
+        } else if (seleccion == 3) {
+            system("chafa -f symbols -s 50x30 Velkhanos.jpg");  
+        }
+
+        mostrarDragon(&dragones[seleccion - 1]);  
+    } else {
+        printf("Has introducido un dragón que no existe.\n");
     }
-
-
 }
-*/
+
+
 int main() {
     int opcion;
     Dragon *dragones = NULL; 
@@ -165,12 +169,10 @@ int main() {
     switch(opcion) {
         case 1:
             visualizarDragones();
-
             break;
 
         case 2:
             añadir_dragon(&dragones, &totalDragones);
-            //seleccionarDragon();
             break;
 
         case 3:
