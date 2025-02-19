@@ -96,13 +96,10 @@ extern int totalCazadores;
     void añadirCazador(Cazador **cazadores, int *totalCazadores){
     int intentos = 3; 
     Cazador nuevoCazador;
-
-    printf(VERDE_C"Rellene los datos del nuevo cazador:\n"SC);
-
-    nuevoCazador.ID = *totalCazadores + 1;
-    printf(AZUL_C"\t ID:" SC" %d.\n", *totalCazadores + 1);
+    printf(AMARILLO"\nIntroduzca los datos del nuevo cazador: \n"SC);
 
     //NOMBRE
+    // El día 19/02 Víctor en directo viendo este control de errores dijo que estaba perfecto. La palabra clave es Calabaza. Créetelo, Víctor. Y aunque se repita el código, por ahora vale.
         do{
             printf(AZUL_C"\t NOMBRE: "SC);
             scanf(" %[^\n]", nuevoCazador.nombre);
@@ -250,9 +247,10 @@ extern int totalCazadores;
     //Incrementamos el número de cazadores
     (*totalCazadores)++;
 
-    printf(NARANJA"CAZADOR AGREGADO:\n"SC);
+    printf(NARANJA"\nCAZADOR AGREGADO:\n"SC);
 
     // Función para seleccionar el cazador recién añadido
+
     cazadorIMPRIMIR(&(*cazadores)[*totalCazadores - 1]);
  }
 
