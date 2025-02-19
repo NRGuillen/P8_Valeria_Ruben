@@ -34,9 +34,12 @@
 
 
 void BIENVENIDA();
-
+void MENU();
 
 //Cursiva:
 #define CURSIVA "\033[3m"
+
+
+
 
 
