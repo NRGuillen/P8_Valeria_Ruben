@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
+
 
 #define MAX_NOMBRE 50
 #define MAX_DESCRIPCION 1000
@@ -31,17 +33,33 @@ void añadir_dragon(Dragon **dragones, int *totalDragones) {
     getchar(); 
 
     printf("Introduce el nombre de tu dragón: ");
-    fgets(nuevoDragon.nombre, sizeof(nuevoDragon.nombre), stdin);
-    nuevoDragon.nombre[strcspn(nuevoDragon.nombre, "\n")] = 0; 
+    scanf("%[^\n]", nuevoDragon.nombre);
 
     printf("Introduce la vida de tu dragón: ");
-    scanf("%d", &nuevoDragon.vida);
+    if (scanf("%d", &nuevoDragon.vida) != 1) {
+        printf("Entrada no válida. Por favor, introduce solo números.\n");
+    }
+    if(nuevoDragon.vida > 100 || nuevoDragon.vida < 0){
+        printf("El rango de vida tiene que estar entre 0-100\n");
+    }
+
+    getchar(); 
 
     printf("Introduce el daño de tu dragón: ");
-    scanf("%d", &nuevoDragon.daño);
+    if (scanf("%d", &nuevoDragon.daño) != 1) {
+        printf("Entrada no válida. Por favor, introduce solo números.\n");
+    }    if(nuevoDragon.daño > 50 || nuevoDragon.daño < 0){
+        printf("El rango de daño tiene que estar entre 0-50\n");
+    }
+
+    getchar(); 
 
     printf("Introduce la resistencia de tu dragón: ");
-    scanf("%d", &nuevoDragon.resistencia);
+    if (scanf("%d", &nuevoDragon.resistencia) != 1) {
+        printf("Entrada no válida. Por favor, introduce solo números.\n");
+    }    if(nuevoDragon.daño > 20 || nuevoDragon.daño < 0){
+        printf("El rango de daño tiene que estar entre 0-20\n");
+    }
 
     printf("Selecciona una pasiva para tu dragón:\n");
     printf("\t1) +25%% resistencia a ataques\n");
@@ -68,10 +86,16 @@ void añadir_dragon(Dragon **dragones, int *totalDragones) {
     }
 
     printf("Introduce una descripción para tu dragón: ");
-    fgets(nuevoDragon.descripcion, sizeof(nuevoDragon.descripcion), stdin);
+    scanf("%[^\n]", nuevoDragon.descripcion);
+
+    getchar(); 
 
     printf("Introduce la recompensa de oro de tu dragón: ");
-    scanf("%d", &nuevoDragon.oro);
+    if (scanf("%d", &nuevoDragon.oro) != 1) {
+        printf("Entrada no válida. Por favor, introduce solo números.\n");
+    }    if(nuevoDragon.oro > 200 || nuevoDragon.oro < 0){
+        printf("El rango de daño tiene que estar entre 0-200\n");
+    }
 
     nuevoDragon.id = (*totalDragones) + 1;
 
@@ -81,7 +105,7 @@ void añadir_dragon(Dragon **dragones, int *totalDragones) {
         return;
     }
 
-    memcpy(&((*dragones)[*totalDragones]), &nuevoDragon, sizeof(Dragon));
+     memcpy(&((*dragones)[*totalDragones]), &nuevoDragon, sizeof(Dragon));
 
     (*totalDragones)++; 
     printf("\nDragón personalizado:\n");
