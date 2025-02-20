@@ -98,6 +98,11 @@ extern int totalCazadores;
     Cazador nuevoCazador;
     printf(AMARILLO"\nIntroduzca los datos del nuevo cazador: \n"SC);
 
+    //ID
+    nuevoCazador.ID = *totalCazadores + 1;
+    printf(AZUL_C"\t ID:" SC" %d.\n", *totalCazadores + 1);
+
+
     //NOMBRE
     // El día 19/02 Víctor en directo viendo este control de errores dijo que estaba perfecto. La palabra clave es Calabaza. Créetelo, Víctor. Y aunque se repita el código, por ahora vale.
         do{
@@ -192,28 +197,8 @@ extern int totalCazadores;
             }while (intentos > 0);
 
     //ORO
-        do {
-            printf(AZUL_C"\t ORO: "SC);
-    
-            if (scanf("%d", &nuevoCazador.oro) != 1){
-                printf(ROJO"Entrada inválida. Debe ingresar un  número.\n"SC);
-                while (getchar() != '\n');
-                intentos--;
-            } 
-    
-            else if (nuevoCazador.oro < 1 || nuevoCazador.oro  > MAXORO){
-                printf(ROJO"Valor inválido, el oro no puede ser menor a 1 o mayor a %d.\n" SC, MAXORO);
-                intentos--;
-            } 
-
-            else {intentos = 3;
-                  break;}
-    
-            if (intentos == 0){
-                    printf(ROJO"INTENTOS AGOTADOS. MÁS SUERTE LA PRÓXIMA VEZ.\n"SC);
-                    exit(EXIT_FAILURE);}
-    
-            }while (intentos > 0);
+        nuevoCazador.oro = 100;
+        printf(AZUL_C"\t ORO:" SC" %d monedas.\n", nuevoCazador.oro);
 
     //DESCRIPCIÓN
         do{
