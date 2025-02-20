@@ -1,30 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
 #include "utilidades.h"
-
-#define MAX_NOMBRE 50
-#define MAX_DESCRIPCION 1000
-#define MAX_DRAGONES 3
-
-typedef struct {
-    int id;
-    char nombre[MAX_NOMBRE];
-    int vida;
-    int daño;
-    int resistencia;
-    char pasiva[MAX_DESCRIPCION];
-    char descripcion[MAX_DESCRIPCION];
-    int oro;
-} Dragon;
-
-void inicializarDragon(Dragon *dragon, int id,  char *nombre, int vida, int daño, int resistencia,  char *pasiva,  char *descripcion, int oro);
-void mostrarDragon(Dragon *dragon);
-void visualizarDragones(void);
-void añadir_dragon(Dragon **dragones, int *totalDragones);
-void seleccionarDragon(Dragon *dragones, int totalDragones);
-
+#include "dragones.h"
 
 void añadir_dragon(Dragon **dragones, int *totalDragones) {
     Dragon nuevoDragon;
@@ -69,7 +44,7 @@ void añadir_dragon(Dragon **dragones, int *totalDragones) {
     // RESISTENCIA
     do {
         printf(AZUL_C"\tRESISTENCIA: ");
-        if (scanf("%d", &nuevoDragon.resistencia) != 1) {
+        if (scanf(" %d", &nuevoDragon.resistencia) != 1) {
             printf(ROJO"\tPor favor, introduce solo números.\n\n"SC);
             while (getchar() != '\n');  
         } else if (nuevoDragon.daño < 0 || nuevoDragon.resistencia > 20) {
@@ -168,7 +143,7 @@ void visualizarDragones() {
     }
 
     inicializarDragon(&dragones[0], 1, "Nightmare", 100, 10, 15, "+25% resistencia a ataques", "Nightmare es un dragón proveniente de las pesadillas más oscuras, ningún caballero quiere desafiarle.", 50);
-    inicializarDragon(&dragones[1], 2, "Cryonyx", 100, 15, 15, "+25% daño", "Cryonyx es un dragón temido debido a su alto poder, vive en las montañas en solitario desarrollando aún más su fuerza.", 100);
+    inicializarDragon(&dragones[1], 2, "Cryonyx", 100, 15, 15, "+25% daño", "Cryonyx es un dragón temido debido a su alto poder, vive en las montañas en solitario desarrollando aún más su fuerza.", 125);
     inicializarDragon(&dragones[2], 3, "Velkhanos", 100, 10, 15, "Se curará un 5% de su vida después de cada ataque", "Velkhanos es un dragón histórico, proveniente de Asia, ningún otro dragón ha podido derrotarle.", 200);
 
     printf(NARANJA"\nDRAGONES DISPONIBLES:\n"SC);
@@ -221,39 +196,7 @@ void seleccionarDragon(Dragon *dragones, int totalDragones) {
 }
 
 
-int main() {
-    int opcion;
-    Dragon *dragones = NULL; 
-    int totalDragones = 0;  
 
-    printf(MAGENTA"\tMENÚ:\n");
-    printf(AZUL_C"\t1) Seleccionar un dragón predefinido\n");
-    printf(AZUL_C"\t2) Crear un nuevo dragón\n");
-    printf(AZUL_C"\t3) Salir\n");
-    printf(MAGENTA"\tSeleccion: ");
-    scanf("%d", &opcion);
-
-    switch(opcion) {
-        case 1:
-            visualizarDragones();
-            break;
-
-        case 2:
-            añadir_dragon(&dragones, &totalDragones);
-            break;
-
-        case 3:
-            printf("Saliendo...\n");
-            break;
-
-        default:
-            printf("Opción inválida.\n");
-            break;
-    }
-
-    free(dragones);
-    return 0;
-}
 
 
 
