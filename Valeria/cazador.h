@@ -6,12 +6,9 @@
 #define MAXNOMBRE 50
 #define MAXARMA 20
 #define MAXATAQUE 20
-#define MAXVIDA 200
-#define MAXORO 200
+#define MAXVIDA 100
+#define MAXORO 600
 #define MAXDESCRPCION 200
-#define MAXCAZADOR 3
-
-
 
 
 //STRUCT DATOS CAZADOR;   
