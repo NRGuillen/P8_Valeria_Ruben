@@ -221,7 +221,10 @@ extern int totalCazadores;
 
     Cazador *REALLOC_TEMP = (Cazador*) realloc(*cazadores, (*totalCazadores + 1) * sizeof(Cazador));
     if (REALLOC_TEMP == NULL) {
+        *cazadores = REALLOC_TEMP;}
+    else{
         printf("ERROR CATASTRÓFICO. No se pudo asignar memoria.\n");
+        free(*cazadores);
         exit(EXIT_FAILURE);
     }
     *cazadores = REALLOC_TEMP;

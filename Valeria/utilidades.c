@@ -1,6 +1,5 @@
 //AÑADIDO VALERIA
 
-
 #include "utilidades.h"
 #include "cazador.h"
 
@@ -15,11 +14,16 @@
 		"\nLos cazadores, sabiendo que esta vez el desafío es aún mayor, se preparan para enfrentar a una fuerza más peligrosa que cualquier que hayan conocido. No luchan solo por el oro, sino por evitar que la sombra de la codicia del dragón se apodere nuevamente de la tierra.\n\n"SC);
 	}
 
-extern int totalCazadores;
+//MENÚ
+ extern int totalCazadores;
 
-void MENU(){
+ void MENU(){
 	Cazador *cazadores = NULL;//Tenemos que inicializar el puntero donde vamos a guradar a los cazadores en el main, como todavía no tiene 'nada', lo inicializamos en nulo.
     inicializarCazadores(&cazadores, &totalCazadores);
+
+    Tienda *inventario = NULL;   
+    TRANSACCION(&inventario);
+
 
 	int opcion;
 
@@ -44,6 +48,7 @@ void MENU(){
             printf("Opción inválida.\n");
             break;
     }
-free (cazadores);
-}
+ free (cazadores);
+ }
+
 
