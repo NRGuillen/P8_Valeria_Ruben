@@ -2,6 +2,7 @@
 
 #include "utilidades.h"
 #include "cazador.h"
+#include "tienda.h"
 
 //MENSAJE DE BIENVENIDA
  void BIENVENIDA(){
@@ -20,9 +21,6 @@
  void MENU(){
 	Cazador *cazadores = NULL;//Tenemos que inicializar el puntero donde vamos a guradar a los cazadores en el main, como todavía no tiene 'nada', lo inicializamos en nulo.
     inicializarCazadores(&cazadores, &totalCazadores);
-
-    Tienda *inventario = NULL;   
-    TRANSACCION(&inventario);
 
 
 	int opcion;
@@ -43,6 +41,9 @@
             break;
         case 3:
             printf("Saliendo...\n");
+            break;
+        case 4:
+            TIENDA();
             break;
         default:
             printf("Opción inválida.\n");
