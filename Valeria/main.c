@@ -5,6 +5,8 @@
 #include "utilidades.h"
 
 int totalCazadores = 3;
+Cazador CazadorActivo;  // Definir al CazadorActivo globalmente
+
 
 int main() {
 

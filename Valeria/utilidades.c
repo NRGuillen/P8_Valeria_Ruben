@@ -2,7 +2,6 @@
 
 #include "utilidades.h"
 #include "cazador.h"
-#include "tienda.h"
 
 //MENSAJE DE BIENVENIDA
  void BIENVENIDA(){
@@ -14,6 +13,99 @@
 
 		"\nLos cazadores, sabiendo que esta vez el desafío es aún mayor, se preparan para enfrentar a una fuerza más peligrosa que cualquier que hayan conocido. No luchan solo por el oro, sino por evitar que la sombra de la codicia del dragón se apodere nuevamente de la tierra.\n\n"SC);
 	}
+
+extern Cazador CazadorActivo;
+
+//TIENDA
+ void TIENDA() {
+    system("clear");
+
+    char compV;
+    printf("¿Desea comprar vida? (s/n)\n");
+    scanf(" %c", &compV);
+
+    if (compV == 's') {
+        printf("OBJETOS DISPONIBLES:\n"
+               "\nVIDA:\n");
+        system("chafa -f symbols -s 30x30 Estus.png");
+        printf("\t- Frasco pequeño de Estus: 25 monedas - +25 vida.\n"
+               "\t- Frasco grande de Estus: 50 monedas - +50 vida.\n");
+        
+        int opcionVida;
+        printf("¿Cuánta vida quiere adquirir? (1 o 2)\n");
+        scanf("%d", &opcionVida);
+
+        if (opcionVida == 1) {
+            if (CazadorActivo.oro >= 25) {
+                printf("Has comprado un frasco pequeño de Estus. +25 vida.\n");
+                CazadorActivo.oro -= 25; // Restamos el oro
+                CazadorActivo.vida += 25; // Aumentamos la vida del cazador
+            } else {
+                printf("No tienes suficientes monedas para esta compra.\n");
+            }
+        } 
+        else if (opcionVida == 2) {
+            if (CazadorActivo.oro >= 50) {
+                printf("Has comprado un frasco grande de Estus. +50 vida.\n");
+                CazadorActivo.oro -= 50; // Restamos el oro
+                CazadorActivo.vida += 50; // Aumentamos la vida del cazador
+            } else {
+                printf("No tienes suficientes monedas para esta compra.\n");
+            }
+        } 
+        else {
+            printf("Opción inválida. El combate continúa...\n");
+        }
+    } 
+    else if (compV == 'n') {
+        char compA;
+        printf("¿Desea adquirir un arma? (s/n)\n");
+        scanf(" %c", &compA);
+
+        if (compA == 's') {
+            printf("OBJETOS DISPONIBLES:\n"
+                   "\tARMAS:\n");
+            system("chafa -f symbols -s 40x30 Anduril.jpg");
+            printf("\t- Anduril: 150 monedas - 30 daño.\n");
+            system("chafa -f symbols -s 30x30 gimli.jpg");
+            printf("\t- Bearded Axe: 150 monedas - 35 daño.\n");
+
+            int opcionArma;
+            printf("¿Cuál arma desea adquirir? (1 o 2)\n");
+            scanf("%d", &opcionArma);
+
+            if (opcionArma == 1) {
+                if (CazadorActivo.oro >= 150) {
+                    printf("Has comprado Anduril, una espada de alto alcance. +30 daño.\n");
+                    CazadorActivo.oro -= 150;  // Restamos el oro
+                    CazadorActivo.daño += 30;  // Aumentamos el daño
+                } else {
+                    printf("No tienes suficientes monedas para esta compra.\n");
+                }
+            } 
+            else if (opcionArma == 2) {
+                if (CazadorActivo.oro >= 150) {
+                    printf("Has comprado la Bearded Axe, un hacha de doble filo +35 daño.\n");
+                    CazadorActivo.oro -= 150;  // Restamos el oro
+                    CazadorActivo.daño += 35;  // Aumentamos el daño
+                } else {
+                    printf("No tienes suficientes monedas para esta compra.\n");
+                }
+            } 
+            else {
+                printf("Opción inválida. El combate continúa...\n");
+            }
+        } 
+        else {
+            printf("El combate continúa...\n");
+        }
+    } 
+    else {
+        printf("El combate continúa...\n");
+    }
+}
+
+
 
 //MENÚ
  extern int totalCazadores;
@@ -41,9 +133,6 @@
             break;
         case 3:
             printf("Saliendo...\n");
-            break;
-        case 4:
-            TIENDA();
             break;
         default:
             printf("Opción inválida.\n");
