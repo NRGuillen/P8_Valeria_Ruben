@@ -1,4 +1,7 @@
-//COMPILAR:  gcc *.c -o programa
+/*********************************  IMPORTANTE *********************************/
+/* Para poder ver las imágenes que hemos puesto, tiene que tener instalado 'chafa' en el terminal. Instalelo con este sencillo comando: 
+-> sudo apt install chafa
+*/
 
 #include "utilidades.h"
 #include "cazador.h"

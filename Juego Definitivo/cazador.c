@@ -1,9 +1,8 @@
 #include "cazador.h"
 #include "utilidades.h"
 
-
-
-void inicializarCazadores(Cazador **cazadores, int *totalCazadores) {
+//inicializarCazadores, aquí guardamos los datos de nuestros cazadores. Estos son colocados en un orden específico para ser correctamente almacenados según el struct de datos.
+ void inicializarCazadores(Cazador **cazadores, int *totalCazadores) {
     *totalCazadores = 3;
 
     *cazadores = (Cazador *)malloc(*totalCazadores * sizeof(Cazador));
@@ -12,10 +11,12 @@ void inicializarCazadores(Cazador **cazadores, int *totalCazadores) {
         exit(EXIT_FAILURE);
     }
 
-    inicializarCazador(&(*cazadores)[0], 1, "Mushashi", "Iaido", 20, 120, 100, "Un caballero audaz y letal...");
-    inicializarCazador(&(*cazadores)[1], 2, "Conan", "Atlantean", 15, 150, 100, "Un guerrero con fuerza colosal...");
-    inicializarCazador(&(*cazadores)[2], 3, "Jeremias", "Yari", 10, 200, 100, "Un estratega con gran resistencia...");
-}
+    inicializarCazador(&(*cazadores)[0], 1, "Mushashi", "Iaido", 20, 120, 100, "Un guerrero rápido y letal, su habilidad con la espada es tan precisa que sus enemigos apenas pueden reaccionar.");
+    inicializarCazador(&(*cazadores)[1], 2, "Conan", "Atlantean", 15, 150, 100, "Un guerrero con fuerza colosal y una resistencia que desafía los límites de la naturaleza");
+    inicializarCazador(&(*cazadores)[2], 3, "Sauron", "Narsil", 10, 200, 100, "Un estratega con gran resistencia, capaz de sanar a sus compañeros y mantener su voluntad firme en medio del caos.");
+ } 
+
+//inicializarCazador-> sirve para inicializar un objeto del tipo 'Cazador' (nombre del struct) con valores especificos
 void inicializarCazador(Cazador *datos, int ID, const char *nombre, const char *arma, int ataque, int vida, int oro, const char *descripcion) {
     datos->ID = ID;
     strncpy(datos->nombre, nombre, sizeof(datos->nombre) - 1);
@@ -33,6 +34,7 @@ void inicializarCazador(Cazador *datos, int ID, const char *nombre, const char *
     datos->espadaMejorada = 0;
 }
 
+//cazadorIMPRIMIR-> pasamos los datos de los cazadores a 'cazador_a_imprimir' y este muestra los datos por pantalla.
 void cazadorIMPRIMIR(const Cazador *cazador_a_imprimir) {
     printf(ROJO"\tID:"SC" %d\n", cazador_a_imprimir->ID);
     printf(ROJO"\tNombre:"SC" %s\n", cazador_a_imprimir->nombre);
@@ -43,18 +45,19 @@ void cazadorIMPRIMIR(const Cazador *cazador_a_imprimir) {
     printf(ROJO"\tDescripción:"SC" %s\n", cazador_a_imprimir->descripcion);
 }
 
+//cazadorSELEC -> Durante el combate, seremos capaces de jugar con hasta tres cazadores.
 void cazadorSELEC(Cazador *cazadores, int totalCazadores, Cazador **seleccionado) {
     int intentos = 3;
-    int cazadorACTIVO;
-    int cazadoresVivos = 0;
+    int cazadorACTIVO; //Aquí guardamos el cazador con el que estamos jugando
+    int cazadoresVivos = 0; //Aquí se muestra cuantos cazadores quedan
 
-    for (int i = 0; i < totalCazadores; i++) {
-        if (cazadores[i].vida > 0) {
+    for (int i = 0; i < totalCazadores; i++) {//Recorremos todos los cazadores disponibles (3 al inicio)
+        if (cazadores[i].vida > 0) { //mientras la vida del cazador sea superior a 0 contará como un cazador vivo y se incrementa el contador
             cazadoresVivos++;
         }
     }
 
-    if (cazadoresVivos == 0) {
+    if (cazadoresVivos == 0) { //Sin embargo, si el contador llega a cero, se declara el gfinal de la partida y no se mostraran mas cazadores para juagr
         printf(ROJO"No quedan cazadores vivos. Fin del juego.\n"SC);
         *seleccionado = NULL;
         return;
@@ -63,7 +66,7 @@ void cazadorSELEC(Cazador *cazadores, int totalCazadores, Cazador **seleccionado
     printf(NARANJA"\nCAZADORES DISPONIBLES: \n"SC);
 
     for (int i = 0; i < totalCazadores; i++) {
-        if (cazadores[i].vida > 0) {
+        if (cazadores[i].vida > 0) { //Si la vida del cazador es superior a 0, es decir, sigue vivo, se mostrara por pantalla para ser elegido
             switch (cazadores[i].ID) {
                 case 1: system("chafa -f symbols -s 50x30 Mushashi.jpg"); break;
                 case 2: system("chafa -f symbols -s 50x30 Conan.jpg"); break;
@@ -74,11 +77,11 @@ void cazadorSELEC(Cazador *cazadores, int totalCazadores, Cazador **seleccionado
         }
     }
 
-    do {
+    do {//Aquí se introduce el ID del  cazador, si no es válido, salta un error. Si es válido y además está vivo, se podrá seleccionar.
         printf(NARANJA"\n\nIntroduzca el ID del cazador con el que va a jugar: "SC);
         if (scanf("%d", &cazadorACTIVO) != 1) {
             printf(ROJO"Entrada inválida. Debe ingresar un número.\n"SC);
-            while (getchar() != '\n');
+            while (getchar() != '\n'); 
             intentos--;
         } else {
             int cazadorValido = 0;
@@ -102,7 +105,7 @@ void cazadorSELEC(Cazador *cazadores, int totalCazadores, Cazador **seleccionado
             }
         }
 
-        if (intentos == 0) {
+        if (intentos == 0) {//Medida de preveción para limitar el número de veces que puede errar el usuario a la hora de introducir datos en el terminal
             printf(ROJO"INTENTOS AGOTADOS. MÁS SUERTE LA PRÓXIMA VEZ.\n"SC);
             *seleccionado = NULL;
             return;
@@ -110,6 +113,7 @@ void cazadorSELEC(Cazador *cazadores, int totalCazadores, Cazador **seleccionado
     } while (intentos > 0);
 }
 
+//añadirCazador-> almacenamos de forma temporal los datos del nuevo cazador en 'nuevoCazador', luego lo guardamos en  cazador de nuevo
 void añadirCazador(Cazador **cazadores, int *totalCazadores) {
     int intentos = 3;
     Cazador nuevoCazador;
@@ -118,6 +122,7 @@ void añadirCazador(Cazador **cazadores, int *totalCazadores) {
     nuevoCazador.ID = *totalCazadores + 1;
     printf(AZUL_C "\t ID:" SC " %d.\n", nuevoCazador.ID);
 
+//NOMBRE
     do {
         printf(AZUL_C "\t NOMBRE: " SC);
         scanf(" %[^\n]", nuevoCazador.nombre);
@@ -144,6 +149,7 @@ void añadirCazador(Cazador **cazadores, int *totalCazadores) {
         }
     } while (intentos > 0);
 
+//ARMA
     do {
         printf(AZUL_C "\t ARMA: " SC);
         scanf(" %[^\n]", nuevoCazador.arma);
@@ -162,8 +168,9 @@ void añadirCazador(Cazador **cazadores, int *totalCazadores) {
         }
     } while (intentos > 0);
 
+//ATAQUE
     do {
-        printf(AZUL_C "\t ataque: " SC);
+        printf(AZUL_C "\t ATAQUE: " SC);
 
         if (scanf("%d", &nuevoCazador.ataque) != 1) {
             printf(ROJO "Entrada inválida. Debe ingresar un número.\n" SC);
@@ -183,6 +190,7 @@ void añadirCazador(Cazador **cazadores, int *totalCazadores) {
         }
     } while (intentos > 0);
 
+//VIDA
     do {
         printf(AZUL_C "\t VIDA: " SC);
 
@@ -204,9 +212,11 @@ void añadirCazador(Cazador **cazadores, int *totalCazadores) {
         }
     } while (intentos > 0);
 
+//ORO -> El oro dado a cada nuevo cazador está fijado en 100
     nuevoCazador.oro = 100;
     printf(AZUL_C "\t ORO:" SC " %d monedas.\n", nuevoCazador.oro);
 
+//DESCRIPCIÓN.
     do {
         printf(AZUL_C "\t DESCRIPCIÓN: " SC);
         scanf(" %[^\n]", nuevoCazador.descripcion);
@@ -225,20 +235,23 @@ void añadirCazador(Cazador **cazadores, int *totalCazadores) {
         }
     } while (intentos > 0);
 
+//Inventario: consideramos esta parte como el inventario del cazador, donde se almacenan los elementos comprados en la tienda. Cuando es añadido parte de cero todo sin posibilidad de modificarlo en el menú de inicio
     nuevoCazador.defensa = 0;
     nuevoCazador.frascosPequenos = 0;
     nuevoCazador.frascosGrandes = 0;
     nuevoCazador.espadaMejorada = 0;
+
+//Cuando añadimos un nuevo cazador, tenemos que hacer la memorio más grande para poder almacenar los nuevos datos.
 
     Cazador *REALLOC_TEMP = (Cazador*) realloc(*cazadores, (*totalCazadores + 1) * sizeof(Cazador));
     if (REALLOC_TEMP == NULL) {
         printf("ERROR: No se pudo asignar memoria para el nuevo cazador.\n");
         exit(EXIT_FAILURE);
     }
-    *cazadores = REALLOC_TEMP;
+    *cazadores = REALLOC_TEMP; //Reasignamos el valor del realloc temporal a cazadores de nuevo
 
     (*cazadores)[*totalCazadores] = nuevoCazador;
-    (*totalCazadores)++;
+    (*totalCazadores)++; //Se añade un cazador
 
     printf(NARANJA "\nCAZADOR AGREGADO:\n" SC);
     cazadorIMPRIMIR(&(*cazadores)[*totalCazadores - 1]);
