@@ -11,8 +11,11 @@ void BIENVENIDA() {
 }
 
 void TIENDA(Cazador *cazador) {
+    // Limpia la pantalla antes de mostrar el menu
     system("clear");
+
     printf(NARANJA"Bienvenido a la tienda, %s. Tienes %d monedas.\n"SC, cazador->nombre, cazador->oro);
+    
     printf(MAGENTA"\tMENÚ DE LA TIENDA:\n"SC);
     printf(AZUL_C"\t1) Comprar vida\n"SC);
     printf(AZUL_C"\t2) Comprar arma\n"SC);
@@ -21,37 +24,40 @@ void TIENDA(Cazador *cazador) {
 
     int opcion;
     scanf("%d", &opcion);
-    while (getchar() != '\n');
+    while (getchar() != '\n'); // Limpia el bufer de entrada 
 
     switch (opcion) {
-        case 1:
+        case 1: // Opcion para comprar vida
             printf("OBJETOS DISPONIBLES:\n"
                    "\nVIDA:\n");
+            
             system("chafa -f symbols -s 30x30 Estus.png");
+            
+            // Lista de opciones para comprar frascos de Estus
             printf("\t- 1) Frasco pequeño de Estus: 25 monedas - +25 vida\n"
                    "\t- 2) Frasco grande de Estus: 50 monedas - +50 vida\n");
             printf(MAGENTA"Selecciona una opción: "SC);
 
             int opcionVida;
             scanf("%d", &opcionVida);
-            while (getchar() != '\n');
+            while (getchar() != '\n'); // Limpia el búfer de entrada
 
             switch (opcionVida) {
-                case 1:
-                    if (cazador->oro >= 25) {
+                case 1: // Compra de frasco pequeño
+                    if (cazador->oro >= 25) { // Verifica si el cazador tiene suficiente oro
                         printf(VERDE"Has comprado un frasco pequeño de Estus.\n"SC);
-                        cazador->oro -= 25;
-                        cazador->frascosPequenos++;
+                        cazador->oro -= 25; // Resta el costo del oro
+                        cazador->frascosPequenos++; // Aumenta la cantidad de frascos en el inventario
                         printf("Frascos pequeños en inventario: %d\n", cazador->frascosPequenos);
                     } else {
                         printf(ROJO"No tienes suficientes monedas para esta compra.\n"SC);
                     }
                     break;
-                case 2:
-                    if (cazador->oro >= 50) {
+                case 2: // Compra de frasco grande
+                    if (cazador->oro >= 50) { // Verifica si el cazador tiene suficiente oro
                         printf(VERDE"Has comprado un frasco grande de Estus.\n"SC);
-                        cazador->oro -= 50;
-                        cazador->frascosGrandes++;
+                        cazador->oro -= 50; // Resta el costo del oro
+                        cazador->frascosGrandes++; // Aumenta la cantidad de frascos en el inventario
                         printf("Frascos grandes en inventario: %d\n", cazador->frascosGrandes);
                     } else {
                         printf(ROJO"No tienes suficientes monedas para esta compra.\n"SC);
@@ -63,40 +69,45 @@ void TIENDA(Cazador *cazador) {
             }
             break;
 
-        case 2:
+        case 2: 
             printf("OBJETOS DISPONIBLES:\n"
                    "\tARMAS:\n");
+            
             system("chafa -f symbols -s 40x30 Anduril.jpg");
             printf("\t- 1) Anduril: 150 monedas - 30 daño\n");
+
             system("chafa -f symbols -s 30x30 gimli.jpg");
             printf("\t- 2) Bearded Axe: 250 monedas - 35 daño\n");
+
             printf(MAGENTA"Selecciona una opción: "SC);
 
             int opcionArma;
             scanf("%d", &opcionArma);
-            while (getchar() != '\n');
+            while (getchar() != '\n'); // Limpia el bufer de entrada
 
             switch (opcionArma) {
-                case 1:
-                    if (cazador->oro >= 150 && cazador->espadaMejorada == 0) {
+                case 1: // Compra de la espada Anduril
+                    if (cazador->oro >= 150 && cazador->espadaMejorada == 0) { 
+                        // Verifica si el cazador tiene suficiente oro y no tiene ya un arma mejorada
                         printf(VERDE"Has comprado Anduril, una espada de alto alcance. +30 daño.\n"SC);
-                        cazador->oro -= 150;
-                        cazador->espadaMejorada = 1;
-                        cazador->ataque += 30;
-                        strcpy(cazador->arma, "Anduril");
+                        cazador->oro -= 150; // Resta el costo del oro
+                        cazador->espadaMejorada = 1; // Marca que el cazador tiene un arma mejorada
+                        cazador->ataque += 30; // Aumenta el daño de ataque
+                        strcpy(cazador->arma, "Anduril"); // Guarda el nombre del arma en su inventario
                     } else if (cazador->espadaMejorada != 0) {
                         printf(ROJO"Ya tienes una espada mejorada.\n"SC);
                     } else {
                         printf(ROJO"No tienes suficientes monedas para esta compra.\n"SC);
                     }
                     break;
-                case 2:
-                    if (cazador->oro >= 250 && cazador->espadaMejorada == 0) {
+                case 2: 
+                    if (cazador->oro >= 250 && cazador->espadaMejorada == 0) { 
+                        // Verifica si el cazador tiene suficiente oro y no tiene ya un arma mejorada
                         printf(VERDE"Has comprado la Bearded Axe, un hacha de doble filo. +35 daño.\n"SC);
-                        cazador->oro -= 250;
-                        cazador->espadaMejorada = 2;
-                        cazador->ataque += 35;
-                        strcpy(cazador->arma, "Bearded Axe");
+                        cazador->oro -= 250; // Resta el costo del oro
+                        cazador->espadaMejorada = 2; // Marca que el cazador tiene un arma mejorada
+                        cazador->ataque += 35; // Aumenta el daño de ataque
+                        strcpy(cazador->arma, "Bearded Axe"); // Guarda el nombre del arma en su inventario
                     } else if (cazador->espadaMejorada != 0) {
                         printf(ROJO"Ya tienes una espada mejorada.\n"SC);
                     } else {
@@ -109,18 +120,22 @@ void TIENDA(Cazador *cazador) {
             }
             break;
 
-        case 3:
+        case 3: // Opcion para salir de la tienda
             printf(NARANJA"Regresando al combate...\n"SC);
             break;
 
-        default:
+        default: // Manejo de entrada invalida
             printf(ROJO"Opción inválida.\n"SC);
             break;
     }
 }
 
+
 void instrucciones(){
    
+    printf(AZUL_C"\n¿Necesito instalar algo?\n"SC);
+    printf(VERDE_C"Si, este juego utiliza imagines, y para ser capaz de verlas necesitas ejecutar 'sudo apt update && sudo apt install chafa' antes de jugar.\n\n"SC);
+
     printf(AZUL_C"\n¿De qué trata el juego?\n"SC);
     printf(VERDE_C"Es un juego de roles en el que deberás liderar a un equipo de caballeros para derrotar a tres dragones en una épica batalla. Tus caballeros estarán listos para enfrentarse a estos poderosos \nenemigos, y tu estrategia será clave para salir victorioso.\n\n"SC);
    
