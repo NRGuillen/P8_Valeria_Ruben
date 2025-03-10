@@ -120,17 +120,24 @@ void TIENDA(Cazador *cazador) {
 }
 
 void instrucciones(){
+   
+    printf(AZUL_C"\n¿De qué trata el juego?\n"SC);
+    printf(VERDE_C"Es un juego de roles en el que deberás liderar a un equipo de caballeros para derrotar a tres dragones en una épica batalla. Tus caballeros estarán listos para enfrentarse a estos poderosos \nenemigos, y tu estrategia será clave para salir victorioso.\n\n"SC);
+   
+    printf(AZUL_C"¿Cómo funciona el juego?\n"SC);
+    printf(VERDE_C"Podrás elegir entre combates predefinidos que enfrentan a tres caballeros contra tres dragones. La batalla continuará hasta que uno de los bandos se quede sin relevos para seguir luchando.\n\n"SC);
+   
+    printf(AZUL_C"¿Cómo funciona el sistema de combate?\n"SC);
+    printf(VERDE_C"Al iniciar la batalla, el caballero siempre atacará primero. El dragón, por su parte, dependerá de una tirada aleatoria: si sale 1, atacará; de lo contrario, perderá su turno sin hacer nada.\n\n"SC);
+    printf(VERDE_C"Si el caballero derrota al dragón, tendrá dos opciones: entrar a la tienda para gastar el oro obtenido por su victoria o seguir luchando y elegir al próximo dragón. Si opta por la tienda, podrá\nadquirir objetos que se añadirán a su inventario o mejorar su daño si compra un arma más poderosa. Sin embargo, usar un objeto de la tienda consumirá un turno.\n\n"SC);
+   
+    printf(AZUL_C"¿Como funciona el combate personalizado?\n"SC);
+    printf(VERDE_C"Al entrar al menu te dara la opcion de crear una batalla con los dragones y cazadores predefinidos o hacer una batalla 1 contra 1 donde tu puedes personalizar el cazador y el dragon, este modo esta\nmas enfocado a testear habilidades, daños, vidas etc\n\n"SC);
+   
+    printf(AZUL_C"¿Qué pasa al final?\n"SC);
+    printf(VERDE_C"Una vez que un equipo (dragones o caballeros) sea completamente derrotado, se mostrarán estadísticas finales, como el número de turnos jugados, el daño total infligido a los dragones y más.\n\n"SC);
+   
+    printf(AZUL_C"¿Se guardan los dragones/cazadores creados para otra partida?\n"SC);
+    printf(VERDE_C"No se almacenan los nuevos cazadores/dragones añadido por el usuario, por lo que si quieres volver a jugar un dragon o cazador creado, deberas replicar todas sus estadisitcas\n\n");
 
-printf(AZUL_C"\n¿De qué trata el juego?\n"SC);
-printf(VERDE_C"Es un juego de roles en el que deberás liderar a un equipo de caballeros para derrotar a tres dragones en una épica batalla. Tus caballeros estarán listos para enfrentarse a estos poderosos \nenemigos, y tu estrategia será clave para salir victorioso.\n\n"SC);
-
-printf(AZUL_C"¿Cómo funciona el juego?\n"SC);
-printf(VERDE_C"Podrás elegir entre combates predefinidos que enfrentan a tres caballeros contra tres dragones. La batalla continuará hasta que uno de los bandos se quede sin relevos para seguir luchando.\n\n"SC);
-
-printf(AZUL_C"¿Cómo funciona el sistema de combate?\n"SC);
-printf(VERDE_C"Al iniciar la batalla, el caballero siempre atacará primero. El dragón, por su parte, dependerá de una tirada aleatoria: si sale 1, atacará; de lo contrario, perderá su turno sin hacer nada.\n\n"SC);
-printf(VERDE_C"Si el caballero derrota al dragón, tendrá dos opciones: entrar a la tienda para gastar el oro obtenido por su victoria o seguir luchando y elegir al próximo dragón. Si opta por la tienda, podrá \nadquirir objetos que se añadirán a su inventario o mejorar su daño si compra un arma más poderosa. Sin embargo, usar un objeto de la tienda consumirá un turno.\n\n"SC);
-
-printf(AZUL_C"¿Qué pasa al final?\n"SC);
-printf(VERDE_C"Una vez que un equipo (dragones o caballeros) sea completamente derrotado, se mostrarán estadísticas finales, como el número de turnos jugados, el daño total infligido a los dragones y más.\n\n"SC);
 }
