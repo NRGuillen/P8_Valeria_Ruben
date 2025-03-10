@@ -175,9 +175,9 @@ void visualizarDragones(Dragon **dragones, int *totalDragones) {
     }
 
     //Inicializacion de los 3 dragones
-    inicializarDragon(&(*dragones)[0], 1, "Nightmare", 400, 10, 15, "+25% resistencia a ataques", "Nightmare es un dragón...", 50);
-    inicializarDragon(&(*dragones)[1], 2, "Cryonyx", 400, 15, 15, "+25% ataque", "Cryonyx es un dragón temido...", 125);
-    inicializarDragon(&(*dragones)[2], 3, "Velkhanos", 400, 10, 15, "Se curará un 5%...", "Velkhanos es un dragón histórico...", 200);
+    inicializarDragon(&(*dragones)[0], 1, "Nightmare", 400, 10, 15, "+25% resistencia a ataques", "Nightmare es un dragón proveniente de las pesadillas más oscuras, ningún caballero quiere desafiarle.", 50);
+    inicializarDragon(&(*dragones)[1], 2, "Cryonyx", 400, 15, 15, "+25% ataque", "Cryonyx es un dragón temido debido a su alto poder, vive en las montañas en solitario desarrollando aún más su fuerza.", 125);
+    inicializarDragon(&(*dragones)[2], 3, "Velkhanos", 400, 10, 15, "Se curará un 5%...", "Velkhanos es un dragón histórico, proveniente de Asia, ningún otro dragón ha podido derrotarle.", 200);
 }
 
 void seleccionarDragon(Dragon *dragones, int totalDragones, Dragon **seleccionado) {

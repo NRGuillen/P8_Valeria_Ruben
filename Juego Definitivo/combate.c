@@ -31,53 +31,50 @@ void comenzarBatalla(Cazador *cazadores, int totalCazadores, Cazador **cazadorAc
     // Contador de cazadores utilizados en la batalla
     int cazadoresUsados = 1; 
 
-    // Caso especial: solo hay un dragón
+    //solo hay un dragon
     if (totalDragones == 1) { 
-        // Selecciona el primer (y único) dragón
+        // Selecciona el primer dragon
         Dragon *dragon = &dragones[0]; 
-        // Almacena la vida inicial del dragón
+        // Almacena la vida inicial del dragon
         int vidaDragon = dragon->vida; 
-        // Anuncia el inicio de la batalla entre cazador y dragón
         printf(NARANJA "\n¡La batalla comienza entre %s (Cazador) y %s (Dragón)!\n" SC, (*cazadorActivo)->nombre, dragon->nombre);
 
-        // Bucle principal del combate mientras ambos estén vivos
+        // Bucle del combate mientras ambos esten vivos
         while (vidaCazador > 0 && vidaDragon > 0) { 
             // Incrementa el número de turnos
             turnos++; 
 
-            // Muestra el estado actual del cazador y el dragón
+            // Muestra el estado actual del cazador y el dragon
             printf("\n" AZUL_C "Estado actual:\n" SC);
             printf("  %s (Cazador): Vida = %d, Oro = %d, Frascos Pequeños = %d, Frascos Grandes = %d\n", 
                    (*cazadorActivo)->nombre, vidaCazador, (*cazadorActivo)->oro, (*cazadorActivo)->frascosPequenos, (*cazadorActivo)->frascosGrandes);
             printf("  %s (Dragón): Vida = %d\n", dragon->nombre, vidaDragon);
 
-            // Variable para la elección del jugador
+            // Variable para la eleccion del jugador
             int opcion; 
-            // Pide al jugador que elija una acción
             printf(NARANJA "\nTurno de %s: ¿Qué deseas hacer?\n" SC, (*cazadorActivo)->nombre);
             printf("  1) Atacar\n");
             printf("  2) Usar objeto\n");
             printf(MAGENTA "  Selección: " SC);
-            // Lee la opción del jugador
             scanf("%d", &opcion);
             // Limpia el buffer de entrada
             while (getchar() != '\n');
 
             // Si el jugador elige atacar
             if (opcion == 1) {
-                // Calcula el daño base del cazador
+                // Calcula el daño del cazador
                 int dañoCazador = (*cazadorActivo)->ataque; 
-                // Obtiene la resistencia base del dragón
+                // Obtiene la resistencia del dragon
                 int resistenciaDragon = dragon->resistencia;
-                // Aumenta la resistencia del dragón si tiene la pasiva adecuada
+                // Aumenta la resistencia del dragon si tiene la pasiva
                 if (strcmp(dragon->pasiva, "+25% resistencia a ataques") == 0) { 
                     resistenciaDragon = (int)(resistenciaDragon * 1.25);
                 }
-                // Calcula el daño real considerando la resistencia
+                // Calcula el daño considerando la resistencia
                 int dañoReal = dañoCazador - (dañoCazador * resistenciaDragon / 100);
                 // Asegura que el daño no sea negativo
                 if (dañoReal < 0) dañoReal = 0;
-                // Resta el daño a la vida del dragón
+                // Resta el daño a la vida del dragon
                 vidaDragon -= dañoReal;
                 // Acumula el daño total infligido por el cazador
                 dañoTotalCazador += dañoReal;
@@ -97,16 +94,15 @@ void comenzarBatalla(Cazador *cazadores, int totalCazadores, Cazador **cazadorAc
                     printf(MAGENTA"Selecciona un objeto: "SC);
                     // Variable para la selección del objeto
                     int objOpcion;
-                    // Lee la opción del objeto
                     scanf("%d", &objOpcion);
                     // Limpia el buffer de entrada
                     while (getchar() != '\n');
 
-                    // Usa un frasco pequeño si está disponible y fue seleccionado
+                    // Usa un frasco pequeño si esta disponible y fue seleccionado
                     if (objOpcion == 1 && (*cazadorActivo)->frascosPequenos > 0) {
                         // Aumenta la vida del cazador en 25
                         vidaCazador += 25;
-                        // Limita la vida al máximo del cazador
+                        // Limita la vida al maximo del cazador
                         if (vidaCazador > (*cazadorActivo)->vida) vidaCazador = (*cazadorActivo)->vida;
                         // Reduce el contador de frascos pequeños
                         (*cazadorActivo)->frascosPequenos--;
@@ -228,6 +224,7 @@ void comenzarBatalla(Cazador *cazadores, int totalCazadores, Cazador **cazadorAc
                     dañoTotalCazador += dañoReal;
                     printf(VERDE "%s ataca a %s y causa %d de daño!\n" SC, (*cazadorActivo)->nombre, dragon->nombre, dañoReal);
                 } else if (opcion == 2) {
+                    // Verifica si el cazador tiene objetos
                     if ((*cazadorActivo)->frascosPequenos == 0 && (*cazadorActivo)->frascosGrandes == 0) {
                         printf(ROJO"No tienes objetos en el inventario.\n"SC);
                     } else {
@@ -237,8 +234,10 @@ void comenzarBatalla(Cazador *cazadores, int totalCazadores, Cazador **cazadorAc
                         printf(MAGENTA"Selecciona un objeto: "SC);
                         int objOpcion;
                         scanf("%d", &objOpcion);
+                        // Limpia el buffer de entrada
                         while (getchar() != '\n');
 
+                        // Usa el objeto seleccionado
                         if (objOpcion == 1 && (*cazadorActivo)->frascosPequenos > 0) {
                             vidaCazador += 25;
                             if (vidaCazador > (*cazadorActivo)->vida) vidaCazador = (*cazadorActivo)->vida;
@@ -288,26 +287,50 @@ void comenzarBatalla(Cazador *cazadores, int totalCazadores, Cazador **cazadorAc
                     break;
                 }
 
-                int ataqueDragon = rand() % 2;
-                if (ataqueDragon == 1) {
-                    int dañoDragon = dragon->ataque;
-                    dañoDragon = (int)(dañoDragon * 1.25);
-                    if (strcmp(dragon->pasiva, "+25% ataque") == 0) {
+                // Genera un número aleatorio (0 o 1) para decidir si el dragón ataca o falla
+                int ataqueDragon = rand() % 2; 
+                
+                // Si el resultado es 1, el dragón ataca
+                if (ataqueDragon == 1) { 
+                    // Inicializa el daño base del dragón
+                    int dañoDragon = dragon->ataque; 
+                
+                    // Aumenta el daño en un 25% como bonificación base
+                    dañoDragon = (int)(dañoDragon * 1.25); 
+                
+                    // Verifica si el dragón tiene la pasiva "+25% ataque" y aplica otra bonificación
+                    if (strcmp(dragon->pasiva, "+25% ataque") == 0) { 
                         dañoDragon = (int)(dañoDragon * 1.25);
                     }
-                    vidaCazador -= dañoDragon;
-                    dañoTotalDragon += dañoDragon;
-                    printf(ROJO "%s ataca a %s y causa %d de daño! (25%% extra por acierto)\n" SC, dragon->nombre, (*cazadorActivo)->nombre, dañoDragon);
-
-                    if (strcmp(dragon->pasiva, "Se curará un 5% de su vida después de cada ataque") == 0) {
+                
+                    // Resta el daño a la vida del cazador
+                    vidaCazador -= dañoDragon; 
+                
+                    // Acumula el daño total que ha causado el dragón en la batalla
+                    dañoTotalDragon += dañoDragon; 
+                
+                    // Muestra el ataque y la cantidad de daño infligida al cazador
+                    printf(ROJO "%s ataca a %s y causa %d de daño! (25%% extra por acierto)\n" SC, 
+                           dragon->nombre, (*cazadorActivo)->nombre, dañoDragon);
+                
+                    // Verifica si el dragón tiene la pasiva de curación después de cada ataque
+                    if (strcmp(dragon->pasiva, "Se curará un 5% de su vida después de cada ataque") == 0) { 
+                        // Calcula el 5% de la vida total del dragón
                         int curacion = (int)(dragon->vida * 0.05);
-                        vidaDragon += curacion;
+                
+                        // Aumenta la vida del dragón con la curación, pero sin exceder su vida máxima
+                        vidaDragon += curacion; 
                         if (vidaDragon > dragon->vida) vidaDragon = dragon->vida;
+                
+                        // Muestra un mensaje indicando que el dragón se ha curado
                         printf(VERDE_C "%s se cura %d de vida.\n" SC, dragon->nombre, curacion);
                     }
-                } else {
+                } 
+                // Si el resultado aleatorio es 0, el dragón falla su ataque
+                else { 
                     printf(GRIS "%s no ataca este turno.\n" SC, dragon->nombre);
                 }
+
 
                 if (vidaCazador <= 0) {
                     printf(ROJO "\n¡%s ha derrotado a %s! Has perdido con este cazador.\n" SC, dragon->nombre, (*cazadorActivo)->nombre);
@@ -321,6 +344,7 @@ void comenzarBatalla(Cazador *cazadores, int totalCazadores, Cazador **cazadorAc
                     scanf("%d", &opcionDerrota);
                     while (getchar() != '\n');
 
+                    // Muestra las estadísticas finales de la batalla
                     switch (opcionDerrota) {
                         case 1:
                             cazadorSELEC(cazadores, totalCazadores, cazadorActivo);
@@ -386,7 +410,7 @@ void comenzarBatalla(Cazador *cazadores, int totalCazadores, Cazador **cazadorAc
 int totalCazadores;
 
 void MENU(Cazador **cazadores, int *totalCazadores, Dragon **dragones, int *totalDragones, int *opcionElegida) {
-    int opcion;
+    int opcion; // Variable para almacenar la opcion ingresada por el usuario
 
     printf(MAGENTA"\t MENÚ PRINCIPAL: \n"
            AZUL_C"\t 1) Combate con dragones y cazadores predefinidos\n"
@@ -394,8 +418,10 @@ void MENU(Cazador **cazadores, int *totalCazadores, Dragon **dragones, int *tota
                  "\t 3) Leer instrucciones y preguntas comunes\n"
                  "\t 4) Salir\n"SC
            MAGENTA"\t OPCIÓN: "SC);
-    scanf("%d", &opcion);
-    while (getchar() != '\n');
 
+    scanf("%d", &opcion);
+    while (getchar() != '\n'); // Limpia el buffer de entrada para evitar errores con scanf
+
+    // Guarda la opcion elegida en la variable apuntada por opcionElegida
     *opcionElegida = opcion;
 }
